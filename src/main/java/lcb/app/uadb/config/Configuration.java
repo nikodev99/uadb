@@ -15,4 +15,8 @@ public class Configuration {
         }
         return LocalDateTime.parse(datetime, DateTimeFormatter.ofPattern(format));
     }
+
+    public static String getLastElementOfList(String[] anArray) {
+        return anArray[anArray.length - 1];
+    }
 }

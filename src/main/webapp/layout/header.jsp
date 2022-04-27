@@ -1,8 +1,14 @@
 <%@ page import="lcb.app.uadb.config.StyleSheet" %>
+<%@ page import="java.util.Arrays" %>
+<%@ page import="lcb.app.uadb.config.Configuration" %>
+<%@ page import="java.util.Locale" %>
 <%
     pageContext.setAttribute("pageTitle", "UADB");
     pageContext.setAttribute("styles", new String[]{});
+    String[] urlParts = request.getRequestURL().toString().split("/");
     String contextPath = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/";
+
+    boolean loginPage = Configuration.getLastElementOfList(urlParts).toUpperCase(Locale.ROOT).equals("UADB") || Arrays.asList(urlParts).contains("login");
 %>
 <!DOCTYPE html>
 <html>
@@ -23,5 +29,9 @@
     <link href="<%= StyleSheet.FONT %>" rel="stylesheet">
     <!-- CSS -->
     <%= StyleSheet.setCssStyle(contextPath, styles) %>
+    <link rel="stylesheet" href="<%= contextPath + "layout/assets/styles/main.css" %>">
 </head>
-<body class="login-page">
+<body class="<%= loginPage ? "login-page" : "" %>">
+<% if (!loginPage) { %>
+
+<% } %>

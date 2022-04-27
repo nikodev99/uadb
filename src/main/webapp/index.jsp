@@ -1,6 +1,13 @@
 <%@ page import="lcb.app.uadb.config.Script" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="layout/header.jsp"%>
+<%
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    response.setHeader("Pragma", "no-cache");
+    session.removeAttribute("Auth");
+    //session.invalidate();
+%>
 <%! String pageTitle = "Bienvenu sur UADB"; %>
 <%!
     String[] styles = new String[]{
@@ -13,12 +20,12 @@
     };
 %>
 <%
-    System.out.println(session.getAttribute("errors"));
+    List<String> errors = (List<String>) session.getAttribute("errors");
 %>
 <div class="login-header box-shadow">
     <div class="container-fluid d-flex justify-content-between align-items-center">
         <div class="brand-logo">
-            <a href="login.html">
+            <a href="index.jsp">
                 <span>UADB</span>
             </a>
         </div>
@@ -28,7 +35,7 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-6 col-lg-7">
-                <img src="vendors/images/login-page-img.png" alt="">
+                <img src="layout/assets/images/background.jpg" alt="">
             </div>
             <div class="col-md-6 col-lg-5">
                 <div class="login-box bg-white box-shadow border-radius-10">
@@ -37,9 +44,13 @@
                     </div>
                     <form action="login" method="POST">
                         <div class="select-role">
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <div class="alert alert-danger">Nom d'utilisateur ou mot de passe incorrect</div>
-                            </div>
+                            <% if(errors != null && !errors.isEmpty()) { %>
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                    <% for (String error : errors) { %>
+                                    <div class="alert alert-danger"><%= error %></div>
+                                    <% } %>
+                                </div>
+                            <% } %>
                         </div>
                         <div class="input-group custom">
                             <input type="text" name="username" class="form-control form-control-lg" placeholder="Nom d'utilisateur ou email">
@@ -55,7 +66,7 @@
                         </div>
                         <div class="row pb-30">
                             <div class="col-6">
-                                <div class="forgot-password"><a href="forgot-password.html">Mot de passe oublié</a></div>
+                                <div class="forgot-password"><a href="forgot-password">Mot de passe oublié</a></div>
                             </div>
                         </div>
                         <div class="row">
