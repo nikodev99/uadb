@@ -52,25 +52,20 @@ public class LoginServlet extends PostServlet {
                 if (v.isValid()) {
 
                     session.setAttribute("Auth", loggedUser.getId());
-                    session.setMaxInactiveInterval(5);
+                    session.setMaxInactiveInterval(1800);
 
                     response.sendRedirect("home/dashboard?auth="+loggedUser.getUserID()+"&session_id=" + session.getId());
 
                 }else {
-                    errorRedirect(session, v, response);
+                    errorRedirect(session, v, response, "connexion");
                 }
 
             }else {
-                errorRedirect(session, val, response);
+                errorRedirect(session, val, response, "connexion");
             }
 
         }else {
-            errorRedirect(session, validator, response);
+            errorRedirect(session, validator, response, "connexion");
         }
-    }
-
-    private void errorRedirect(HttpSession session, Validator validator, HttpServletResponse response) throws IOException {
-        session.setAttribute("errors", validator.getErrors());
-        response.sendRedirect("index.jsp");
     }
 }

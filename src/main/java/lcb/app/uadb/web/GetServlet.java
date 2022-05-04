@@ -10,6 +10,7 @@ public class GetServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        authorized(req, resp);
         setParameters(req);
         resp.setContentType("text/html; charset=UTF-8");
         resp.setCharacterEncoding("UTF-8");
@@ -23,5 +24,8 @@ public class GetServlet extends HttpServlet {
     }
 
     protected void setParameters(HttpServletRequest request) {
+    }
+
+    protected void authorized(HttpServletRequest request, HttpServletResponse response) {
     }
 }

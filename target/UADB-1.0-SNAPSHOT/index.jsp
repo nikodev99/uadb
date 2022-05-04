@@ -1,5 +1,4 @@
 <%@ page import="lcb.app.uadb.config.Script" %>
-<%@ page import="java.util.List" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="layout/header.jsp"%>
 <%
@@ -8,7 +7,7 @@
     session.removeAttribute("Auth");
     //session.invalidate();
 %>
-<%! String pageTitle = "Bienvenu sur UADB"; %>
+<%! String pageTitle = "Connexion à UADB"; %>
 <%!
     String[] styles = new String[]{
             StyleSheet.CORE, StyleSheet.FONTICON, StyleSheet.STYLE
@@ -19,13 +18,11 @@
             Script.CORE, Script.SCRIPT, Script.PROCESS, Script.LAYOUT_SETTING
     };
 %>
-<%
-    List<String> errors = (List<String>) session.getAttribute("errors");
-%>
+
 <div class="login-header box-shadow">
     <div class="container-fluid d-flex justify-content-between align-items-center">
         <div class="brand-logo">
-            <a href="index.jsp">
+            <a href="connexion">
                 <span>UADB</span>
             </a>
         </div>
@@ -44,13 +41,7 @@
                     </div>
                     <form action="login" method="POST">
                         <div class="select-role">
-                            <% if(errors != null && !errors.isEmpty()) { %>
-                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                    <% for (String error : errors) { %>
-                                    <div class="alert alert-danger"><%= error %></div>
-                                    <% } %>
-                                </div>
-                            <% } %>
+                            <%@ include file="components/errors.jsp" %>
                         </div>
                         <div class="input-group custom">
                             <input type="text" name="username" class="form-control form-control-lg" placeholder="Nom d'utilisateur ou email">

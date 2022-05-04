@@ -48,7 +48,7 @@ public class Validator extends HttpServlet {
 
     public void isnExist(Table table, String ...strings) {
         if (!table.exists(strings)) {
-            addError("Mot de passe ou nom d'utilisateur incorrect");
+            addError("Nom d'utilisateur ou email ou mot de passe incorrect");
         }
     }
 

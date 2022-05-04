@@ -1,9 +1,12 @@
 package lcb.app.uadb.web;
 
+import lcb.app.uadb.validator.Validator;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
@@ -32,6 +35,11 @@ public class PostServlet extends HttpServlet {
     }
 
     protected void sendRedirect(String url, String[] parameters) {
+    }
+
+    protected void errorRedirect(HttpSession session, Validator validator, HttpServletResponse response, String url) throws IOException {
+        session.setAttribute("errors", validator.getErrors());
+        response.sendRedirect(url);
     }
 
 }

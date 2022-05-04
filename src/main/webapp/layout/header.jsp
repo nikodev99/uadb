@@ -6,6 +6,7 @@
     pageContext.setAttribute("pageTitle", "UADB");
     pageContext.setAttribute("styles", new String[]{});
     String[] urlParts = request.getRequestURL().toString().split("/");
+    System.out.println("URLS: " + Arrays.toString(urlParts));
     String contextPath = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/";
 
     boolean loginPage = Configuration.getLastElementOfList(urlParts).toUpperCase(Locale.ROOT).equals("UADB") || Arrays.asList(urlParts).contains("login");

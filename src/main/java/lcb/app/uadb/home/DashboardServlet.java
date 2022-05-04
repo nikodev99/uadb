@@ -3,9 +3,11 @@ package lcb.app.uadb.home;
 import lcb.app.uadb.user.LoggedUser;
 import lcb.app.uadb.user.UserBean;
 import lcb.app.uadb.web.GetServlet;
+import lcb.app.uadb.web.NullSessionException;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "Dashboard", urlPatterns = {"/home/dashboard"})
 public class DashboardServlet extends GetServlet {
@@ -13,9 +15,17 @@ public class DashboardServlet extends GetServlet {
     private UserBean user;
 
     @Override
-    protected void setParameters(HttpServletRequest request) {
-        user = LoggedUser.getLoggedUser(request);
-        request.setAttribute("loggedUser", user);
+    protected void authorized(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            user = LoggedUser.getLoggedUser(request);
+            request.getSession().setAttribute("loggedUser", user);
+        }catch (NullSessionException n) {
+            try {
+                response.sendRedirect("../connexion");
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
